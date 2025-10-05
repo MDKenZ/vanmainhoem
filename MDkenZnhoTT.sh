@@ -122,8 +122,7 @@ restart_one_pkg(){
   # Đợi game load
   log "[WAIT] Chờ game $pkg load (30s)..."
   sleep 30
-
-  else
+  
     log "[ERROR][$reason] PLACE_ID chưa được set!"
   fi
 
