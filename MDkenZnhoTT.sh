@@ -110,26 +110,22 @@ restart_one_pkg(){
   fi
   sleep 10
 
-  # Deeplink if available
-  if [ -n "$PLACE_ID" ]; then
-    am start -p "$pkg" -a android.intent.action.VIEW -d "roblox://placeId=$PLACE_ID" >/dev/null 2>&1
-    log "[INFO][$reason] Deeplink sau được 10s start -> $PLACE_ID"
-  fi
-
-  # Reset watchdog timer (use LAST_ACTIVE associative array)
-  LAST_ACTIVE["$pkg"]=$(date +%s)
-
-  # Đợi game load
-  log "[WAIT] Chờ game $pkg load (30s)..."
-  sleep 30
-  
- # Nếu PLACE_ID chưa được set
+# Deeplink if available
+if [ -n "$PLACE_ID" ]; then
+  am start -p "$pkg" -a android.intent.action.VIEW -d "roblox://placeId=$PLACE_ID" >/dev/null 2>&1
+  log "[INFO][$reason] Deeplink sau được 10s start -> $PLACE_ID"
+else
   log "[ERROR][$reason] PLACE_ID chưa được set!"
-  # Có thể thoát hoặc quay lại vòng lặp tùy logic của bạn
-  return 1
+fi
 
-  sleep 30
-  log "[DONE][$reason] Restarted $pkg (đã join)"
+# Reset watchdog timer (use LAST_ACTIVE associative array)
+LAST_ACTIVE["$pkg"]=$(date +%s)
+
+# Đợi game load
+log "[WAIT] Chờ game $pkg load (30s)..."
+sleep 30
+
+log "[DONE][$reason] Restarted $pkg (đã join)"
 }
 
 # ====== STATUS CHECK ======
