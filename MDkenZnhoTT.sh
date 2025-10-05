@@ -123,8 +123,10 @@ restart_one_pkg(){
   log "[WAIT] Chờ game $pkg load (30s)..."
   sleep 30
   
-    log "[ERROR][$reason] PLACE_ID chưa được set!"
-  fi
+ # Nếu PLACE_ID chưa được set
+  log "[ERROR][$reason] PLACE_ID chưa được set!"
+  # Có thể thoát hoặc quay lại vòng lặp tùy logic của bạn
+  return 1
 
   sleep 30
   log "[DONE][$reason] Restarted $pkg (đã join)"
